@@ -5,6 +5,7 @@ from .models import (Car,
                      Order,
                      OrderLine)
 
+#
 # Register your models here.
 admin.site.register(Car)
 admin.site.register(CarModel)
