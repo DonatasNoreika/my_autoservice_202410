@@ -5,6 +5,9 @@ from .models import (Car,
                      Order,
                      OrderLine)
 
+class CarAdmin(admin.ModelAdmin):
+    list_display = ['plate', 'vin_code', 'client_name', 'car_model']
+
 class OrderLineInLine(admin.TabularInline):
     model = OrderLine
     extra = 0
@@ -14,7 +17,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderLineInLine]
 
 # Register your models here.
-admin.site.register(Car)
+admin.site.register(Car, CarAdmin)
 admin.site.register(CarModel)
 admin.site.register(Service)
 admin.site.register(Order, OrderAdmin)
