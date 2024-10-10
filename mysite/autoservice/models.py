@@ -45,6 +45,12 @@ class Order(models.Model):
     date = models.DateTimeField(verbose_name="Data", auto_now_add=True)
     car = models.ForeignKey(to="Car", verbose_name="Automobilis", on_delete=models.CASCADE)
 
+    def total(self):
+        total_sum = 0
+        for line in self.lines.all():
+            total_sum += line.line_sum()
+        return total_sum
+
     def __str__(self):
         return f"{self.date} - {self.car}"
 
@@ -54,7 +60,7 @@ class Order(models.Model):
 
 
 class OrderLine(models.Model):
-    order = models.ForeignKey(to="Order", verbose_name="Užsakymas", on_delete=models.CASCADE)
+    order = models.ForeignKey(to="Order", verbose_name="Užsakymas", on_delete=models.CASCADE, related_name="lines")
     service = models.ForeignKey(to="Service", verbose_name="Paslauga", on_delete=models.SET_NULL, null=True, blank=True)
     quantity = models.IntegerField(verbose_name="Kiekis")
 
