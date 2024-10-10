@@ -10,6 +10,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 class CarAdmin(admin.ModelAdmin):
     list_display = ['plate', 'vin_code', 'client_name', 'car_model']
+    list_filter = ['client_name', 'car_model']
 
 class OrderLineInLine(admin.TabularInline):
     model = OrderLine
