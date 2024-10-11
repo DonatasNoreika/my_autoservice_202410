@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block 'title' %}PRADŽIA{% endblock %}
+
+{% block 'content' %}
+<h1>Mūsų autoserviso statistika:</h1>
+<div class="list-group">
+    <a href="#" class="list-group-item"><strong>Paslaugų kiekis: </strong>{{ num_services }}</a>
+    <a href="#" class="list-group-item"><strong>Atliktų užsakymų: </strong>{{ num_orders }}</a>
+    <a href="#" class="list-group-item"><strong>Registruotų automobilių: </strong>{{ num_cars }}</a>
+</div>
+
+{% endblock %}
