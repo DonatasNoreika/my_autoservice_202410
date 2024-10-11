@@ -44,6 +44,13 @@ class Car(models.Model):
 class Order(models.Model):
     date = models.DateTimeField(verbose_name="Data", auto_now_add=True)
     car = models.ForeignKey(to="Car", verbose_name="Automobilis", on_delete=models.CASCADE)
+    CHOICES = [
+        ("a", "Administruojamas"),
+        ("v", "Vykdomas"),
+        ("i", "Įvykdytas"),
+        ("p", "Atmestas"),
+    ]
+    status = models.CharField(verbose_name="Būsena", max_length=1, choices=CHOICES, default="a")
 
     def total(self):
         total_sum = 0
