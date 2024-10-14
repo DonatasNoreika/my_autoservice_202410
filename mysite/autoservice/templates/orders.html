@@ -5,7 +5,7 @@
 {% block 'content' %}
 <h1>Užsakymai:</h1>
 {% for order in orders %}
-<a href=""><p>{{ order }}</p></a>
+<a href="{{ order.pk }}"><p>{{ order }}</p></a>
 <hr>
 {% endfor %}
 {% endblock %}
