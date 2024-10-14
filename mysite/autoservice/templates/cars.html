@@ -5,7 +5,7 @@
 {% block 'content' %}
 <h1>Automobiliai:</h1>
 {% for car in cars %}
-<p>{{ car }}</p>
+<a href="{% url 'car' car.pk %}"><p>{{ car }}</p></a>
 <hr>
 {% endfor %}
 {% endblock %}
