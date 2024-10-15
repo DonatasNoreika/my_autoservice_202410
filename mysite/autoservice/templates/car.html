@@ -3,6 +3,9 @@
 {% block 'title' %}Automobilis{% endblock %}
 
 {% block 'content' %}
+{% if car.photo %}
+<img style="max-width: 50%" src="{{ car.photo.url }}">
+{% endif %}
 <h1>Automobilis "{{ car.car_model }}"</h1>
 <p><strong>Vastybinis numeris: </strong>{{ car.plate }}</p>
 <p><strong>VIN numeris: </strong>{{ car.vin_code }}</p>
