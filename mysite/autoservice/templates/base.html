@@ -29,7 +29,7 @@
                         <input name="query" class="form-control" type="text" placeholder="Paieška">
                     </form>
                 </a>
-                <a class="btn btn-primary" href="#signup">Sign Up</a>
+                <a class="btn btn-primary" href="{% url 'login' %}">Prisijungti</a>
             </div>
         </nav>
         <!-- Masthead-->
@@ -51,7 +51,7 @@
             </div>
         </header>
         <!-- Icons Grid-->
-        <section class="features-icons bg-light">
+        <section class="bg-light mt-3">
             <div class="container">
                 <div class="row">
                     {% block 'content' %}{% endblock %}
