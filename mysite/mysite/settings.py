@@ -23,6 +23,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#gh5%%sgl%_#k^(3f+!-_vbv#$(&dsj!4e1(n2pj3v2g%m%6_8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_POST = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mano_pastas@gmail.com'
+# el. pašto adresas iš kurio siųsite
+EMAIL_HOST_PASSWORD = 'VerySecret'
+
 DEBUG = True
 
 ALLOWED_HOSTS = []
