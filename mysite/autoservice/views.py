@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.core.paginator import Paginator
@@ -52,3 +53,14 @@ def search(request):
         "cars": cars_search_results,
     }
     return render(request, template_name="search.html", context=context)
+
+
+class UserOrderListView(LoginRequiredMixin, ListView):
+    model = Order
+    template_name = "user_orders.html"
+    context_object_name = "orders"
+    paginate_by = 4
+
+    def get_queryset(self):
+        return Order.objects.filter(client=self.request.user)
+
