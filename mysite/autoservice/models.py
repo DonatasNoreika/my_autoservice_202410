@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -51,6 +52,8 @@ class Order(models.Model):
         ("p", "Atmestas"),
     ]
     status = models.CharField(verbose_name="Būsena", max_length=1, choices=CHOICES, default="a")
+    client = models.ForeignKey(to=User, verbose_name="Klientas", on_delete=models.SET_NULL, null=True, blank=True)
+    deadline = models.DateTimeField(verbose_name="Gražinimo laikas", null=True, blank=True)
 
     def total(self):
         total_sum = 0
