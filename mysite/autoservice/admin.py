@@ -5,7 +5,6 @@ from .models import (Car,
                      Order,
                      OrderLine)
 
-
 class ServiceAdmin(admin.ModelAdmin):
     list_display = ['name', 'price']
 
@@ -24,7 +23,7 @@ class OrderLineInLine(admin.TabularInline):
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['date', 'client', 'deadline', 'car', 'status', 'total']
+    list_display = ['date', 'client', 'deadline', 'car', 'status', 'total', 'is_overdue']
     inlines = [OrderLineInLine]
 
     fieldsets = [

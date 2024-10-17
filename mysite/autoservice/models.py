@@ -1,6 +1,9 @@
+from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
+import pytz
+utc=pytz.UTC
 
 # Create your models here.
 class Service(models.Model):
@@ -55,11 +58,18 @@ class Order(models.Model):
     client = models.ForeignKey(to=User, verbose_name="Klientas", on_delete=models.SET_NULL, null=True, blank=True)
     deadline = models.DateTimeField(verbose_name="Gražinimo laikas", null=True, blank=True)
 
+    def is_overdue(self):
+        return self.deadline and self.deadline.replace(tzinfo=utc) < datetime.today().replace(tzinfo=utc)
+
+    is_overdue.short_description = 'Praleistas terminas'
+
     def total(self):
         total_sum = 0
         for line in self.lines.all():
             total_sum += line.line_sum()
         return total_sum
+
+    total.short_description = 'Bendra suma'
 
     def __str__(self):
         return f"{self.date} - {self.car}"
