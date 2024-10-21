@@ -33,4 +33,20 @@
     </tr>
     </tbody>
   </table>
+<h2>Komentarai:</h2>
+{% if user.is_authenticated %}
+<div class="fieldWrapper">
+    <hr><br/>
+    <h1>Palikite atsiliepimą</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.content }}<br/>
+        <input type="submit" value="Paskelbti">
+    </form>
+</div>
+{% endif %}
+{% for comment in order.comments.all %}
+<div><strong>{{ comment.user }}</strong>, <em>{{ comment.date_created }}</em></div>
+<p>{{ comment.content }}</p>
+{% endfor %}
 {% endblock %}

@@ -5,7 +5,8 @@ from tinymce.models import HTMLField
 
 import pytz
 
-utc=pytz.UTC
+utc = pytz.UTC
+
 
 # Create your models here.
 class Service(models.Model):
@@ -36,7 +37,8 @@ class Car(models.Model):
     plate = models.CharField(verbose_name="Valstybinis numeris", max_length=10)
     vin_code = models.CharField(verbose_name="VIN kodas", max_length=20)
     client_name = models.CharField(verbose_name="Klientas", max_length=50)
-    car_model = models.ForeignKey(to="CarModel", verbose_name="Modelis", on_delete=models.SET_NULL, null=True, blank=True)
+    car_model = models.ForeignKey(to="CarModel", verbose_name="Modelis", on_delete=models.SET_NULL, null=True,
+                                  blank=True)
     photo = models.ImageField(verbose_name="nuotrauka", upload_to="cars", null=True, blank=True)
     description = HTMLField(verbose_name="Aprašymas", null=True, blank=True)
 
@@ -98,3 +100,15 @@ class OrderLine(models.Model):
     class Meta:
         verbose_name = "Eilutė"
         verbose_name_plural = "Eilutės"
+
+
+class OrderComment(models.Model):
+    order = models.ForeignKey(to="Order", verbose_name="Užsakymas", on_delete=models.CASCADE, related_name="comments")
+    user = models.ForeignKey(to=User, verbose_name="Komentatorius", on_delete=models.CASCADE)
+    date_created = models.DateTimeField(verbose_name="Data", auto_now_add=True)
+    content = models.TextField(verbose_name="Atsiliepimas", max_length=2000)
+
+    class Meta:
+        verbose_name = "Atsiliepimas"
+        verbose_name_plural = 'Atsiliepimai'
+        ordering = ['-date_created']

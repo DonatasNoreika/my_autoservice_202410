@@ -1,13 +1,15 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView
 from django.core.paginator import Paginator
+from django.views.generic.edit import FormMixin
 from .models import Service, Order, Car
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import password_validation
+from .forms import OrderCommentForm
 
 # Create your views here.
 
@@ -44,10 +46,28 @@ class OrderListView(ListView):
     context_object_name = "orders"
     paginate_by = 4
 
-class OrderDetailView(DetailView):
+class OrderDetailView(FormMixin, DetailView):
     model = Order
     template_name = "order.html"
     context_object_name = "order"
+    form_class = OrderCommentForm
+
+    def get_success_url(self):
+        return reverse("order", kwargs={"pk": self.object.id})
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.order = self.object
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
 
 def search(request):
     query = request.GET.get("query")
