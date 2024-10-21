@@ -42,6 +42,7 @@
                     <button class="btn btn-primary" type="submit">Atsijungti</button>
                 </form>
                 {% else %}
+                <a class="btn btn-primary" href="{% url 'register' %}">Regisruotis</a>
                 <a class="btn btn-primary" href="{% url 'login' %}">Prisijungti</a>
                 {% endif %}
             </div>
@@ -66,6 +67,21 @@
         </header>
         <!-- Icons Grid-->
         <section class="bg-light mt-3">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-sm">
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'info' %}success{% endif %}"
+                             role="alert">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                        {% block "content" %}{% endblock %}
+                    </div>
+                </div>
+            </div>
             <div class="container">
                 <div class="row">
                     {% block 'content' %}{% endblock %}
