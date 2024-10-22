@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block 'title' %}Vartotojo profilis{% endblock %}
+
+{% block 'content' %}
+<img class="rounded-circle account-img" style="width:300px" src="{{ user.profile.photo.url }}">
+<h1>Vartotojo profilis</h1>
+<ul>
+    <li><strong>Vartotojo vardas: </strong>{{ user.username }}</li>
+    <li><strong>El. pašto adresas: </strong>{{ user.email }}</li>
+</ul>
+{% endblock %}
