@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, reverse
@@ -9,7 +10,8 @@ from .models import Service, Order, Car
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import password_validation
-from .forms import OrderCommentForm
+from .forms import OrderCommentForm, UserUpdateForm, ProfileUpdateForm
+
 
 # Create your views here.
 
@@ -125,6 +127,30 @@ def register(request):
             return redirect('register')
     return render(request, 'registration/register.html')
 
+@login_required
 def profile(request):
-    return render(request, template_name="profile.html")
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        new_email = request.POST['email']
+        if new_email == "":
+            messages.error(request, f'El. paštas negali būti tuščias!')
+            return redirect('profile')
+        if request.user.email != new_email and User.objects.filter(email=new_email).exists():
+            messages.error(request, f'Vartotojas su el. paštu {new_email} jau užregistruotas!')
+            return redirect('profile')
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f"Profilis atnaujintas")
+            return redirect('profile')
+
+
+    u_form = UserUpdateForm(instance=request.user)
+    p_form = ProfileUpdateForm(instance=request.user.profile)
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+    }
+    return render(request, "profile.html", context=context)
 

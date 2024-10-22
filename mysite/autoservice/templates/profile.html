@@ -8,5 +8,19 @@
 <ul>
     <li><strong>Vartotojo vardas: </strong>{{ user.username }}</li>
     <li><strong>El. pašto adresas: </strong>{{ user.email }}</li>
+    <li><strong>Vardas: </strong>{{ user.first_name }}</li>
+    <li><strong>Pavardė: </strong>{{ user.last_name }}</li>
 </ul>
+<form method="POST" enctype="multipart/form-data">
+    {% load crispy_forms_tags %}
+    {% csrf_token %}
+    <fieldset>
+        <legend class="border-bottom mb-4">Profilio info</legend>
+        {{ u_form | crispy }}
+        {{ p_form | crispy }}
+    </fieldset>
+    <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Atnaujinti</button>
+    </div>
+</form>
 {% endblock %}
