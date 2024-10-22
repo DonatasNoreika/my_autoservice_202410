@@ -2,6 +2,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 from tinymce.models import HTMLField
+from PIL import Image
 
 import pytz
 
@@ -13,6 +14,14 @@ utc = pytz.UTC
 class Profile(models.Model):
     user = models.OneToOneField(to=User, on_delete=models.CASCADE)
     photo = models.ImageField(verbose_name="Nuotrauka", upload_to="profile_pics", default="profile_pics/default.png")
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        img = Image.open(self.photo.path)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.photo.path)
 
 class Service(models.Model):
     name = models.CharField(verbose_name="Paslauga", max_length=50)
