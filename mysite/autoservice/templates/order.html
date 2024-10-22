@@ -4,9 +4,12 @@
 
 {% block 'content' %}
 <h1>Užsakymas:</h1>
+<p>
+    <strong>Klientas: </strong>{{ order.client }}
+    <img class="rounded-circle account-img" style="width:40px" src="{{ order.client.profile.photo.url }}">
+</p>
 <p><strong>Data: </strong>{{ order.date }}</p>
 <p><strong>Gražinimo data: </strong>{{ order.deadline }}</p>
-<p><strong>Klientas: </strong>{{ order.client }}</p>
 <p><strong>Automobilis: </strong>{{ order.car }}</p>
 <p><strong>Būsena: </strong>{{ order.get_status_display }}</p>
  <table class="table table-bordered">
@@ -46,7 +49,10 @@
 </div>
 {% endif %}
 {% for comment in order.comments.all %}
-<div><strong>{{ comment.user }}</strong>, <em>{{ comment.date_created }}</em></div>
+<div>
+    <img class="rounded-circle account-img" style="width:40px" src="{{ comment.user.profile.photo.url }}">
+    <strong>{{ comment.user }}</strong>, <em>{{ comment.date_created }}</em>
+</div>
 <p>{{ comment.content }}</p>
 {% endfor %}
 {% endblock %}
