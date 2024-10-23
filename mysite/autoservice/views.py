@@ -180,3 +180,14 @@ class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def form_valid(self, form):
         form.instance.client = self.request.user
         return super().form_valid(form)
+
+
+class OrderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Order
+    template_name = "order_delete.html"
+    context_object_name = "order"
+    success_url = "/userorders/"
+
+    def test_func(self):
+        return self.get_object().client == self.request.user
+
