@@ -10,7 +10,7 @@ from .models import Service, Order, Car
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import password_validation
-from .forms import OrderCommentForm, UserUpdateForm, ProfileUpdateForm
+from .forms import OrderCommentForm, UserUpdateForm, ProfileUpdateForm, OrderCreateUpdateForm
 
 # Create your views here.
 
@@ -158,7 +158,8 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
     model = Order
     template_name = "order_form.html"
     success_url = "/userorders/"
-    fields = ['car', 'deadline']
+    form_class = OrderCreateUpdateForm
+    # fields = ['car', 'deadline']
 
     def form_valid(self, form):
         form.instance.client = self.request.user
@@ -168,7 +169,8 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
 class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Order
     template_name = "order_form.html"
-    fields = ['car', 'deadline', 'status']
+    form_class = OrderCreateUpdateForm
+    # fields = ['car', 'deadline', 'status']
     # success_url = "/userorders/"
 
     def get_success_url(self):
