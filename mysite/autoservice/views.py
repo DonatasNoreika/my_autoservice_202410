@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, reverse
 from django.views.decorators.csrf import csrf_protect
@@ -164,3 +164,19 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
         form.instance.client = self.request.user
         return super().form_valid(form)
 
+
+class OrderUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Order
+    template_name = "order_form.html"
+    fields = ['car', 'deadline', 'status']
+    # success_url = "/userorders/"
+
+    def get_success_url(self):
+        return reverse("order", kwargs={"pk": self.object.pk})
+
+    def test_func(self):
+        return self.get_object().client == self.request.user
+
+    def form_valid(self, form):
+        form.instance.client = self.request.user
+        return super().form_valid(form)

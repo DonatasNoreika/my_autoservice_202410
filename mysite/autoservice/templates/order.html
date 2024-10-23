@@ -12,6 +12,11 @@
 <p><strong>Gražinimo data: </strong>{{ order.deadline }}</p>
 <p><strong>Automobilis: </strong>{{ order.car }}</p>
 <p><strong>Būsena: </strong>{{ order.get_status_display }}</p>
+{% if order.client == user %}
+<div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'order_update' order.pk %}">Redaguoti</a>
+</div>
+{% endif %}
  <table class="table table-bordered">
     <thead>
       <tr>
