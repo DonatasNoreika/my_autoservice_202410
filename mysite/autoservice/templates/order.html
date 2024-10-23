@@ -28,6 +28,7 @@
         <th>Kaina</th>
         <th>Kiekis</th>
         <th>Suma</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -37,6 +38,10 @@
         <td>{{ line.service.price }}</td>
         <td>{{ line.quantity }}</td>
         <td><b>{{ line.line_sum }}</b></td>
+        <td>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'orderline_update' line.pk %}">Redaguoti</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'orderline_delete' line.pk %}">Ištrinti</a>
+        </td>
       </tr>
     {% endfor %}
     <tr>

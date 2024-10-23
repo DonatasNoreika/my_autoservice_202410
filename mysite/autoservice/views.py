@@ -208,3 +208,27 @@ class OrderLineCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def form_valid(self, form):
         form.instance.order = Order.objects.get(pk=self.kwargs['order_id'])
         return super().form_valid(form)
+
+
+class OrderLineUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = OrderLine
+    template_name = "orderline_form.html"
+    fields = ['service', 'quantity']
+
+    def get_success_url(self):
+        return reverse("order", kwargs={"pk": self.get_object().order.pk})
+
+    def test_func(self):
+        return self.get_object().order.client == self.request.user
+
+
+class OrderLineDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = OrderLine
+    template_name = "orderline_delete.html"
+    context_object_name = "line"
+
+    def get_success_url(self):
+        return reverse("order", kwargs={"pk": self.get_object().order.pk})
+
+    def test_func(self):
+        return self.get_object().order.client == self.request.user
