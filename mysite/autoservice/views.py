@@ -12,7 +12,6 @@ from django.contrib import messages
 from django.contrib.auth import password_validation
 from .forms import OrderCommentForm, UserUpdateForm, ProfileUpdateForm
 
-
 # Create your views here.
 
 def index(request):
