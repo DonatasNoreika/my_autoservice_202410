@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.core.paginator import Paginator
 from django.views.generic.edit import FormMixin
-from .models import Service, Order, Car
+from .models import Service, Order, Car, OrderLine
 from django.db.models import Q
 from django.contrib import messages
 from django.contrib.auth import password_validation
@@ -193,3 +193,18 @@ class OrderDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         return self.get_object().client == self.request.user
 
+
+class OrderLineCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = OrderLine
+    template_name = "orderline_form.html"
+    fields = ['service', 'quantity']
+
+    def get_success_url(self):
+        return reverse("order", kwargs={"pk": self.kwargs['order_id']})
+
+    def test_func(self):
+        return Order.objects.get(pk=self.kwargs['order_id']).client == self.request.user
+
+    def form_valid(self, form):
+        form.instance.order = Order.objects.get(pk=self.kwargs['order_id'])
+        return super().form_valid(form)
