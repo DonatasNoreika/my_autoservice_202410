@@ -96,6 +96,7 @@ class Order(models.Model):
     class Meta:
         verbose_name = "Užsakymas"
         verbose_name_plural = "Užsakymai"
+        ordering = ["-date"]
 
 
 class OrderLine(models.Model):

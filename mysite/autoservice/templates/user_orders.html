@@ -3,6 +3,8 @@
 {% block 'title' %}Mano užsakymai{% endblock %}
 
 {% block 'content' %}
+<a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'order_new' %}">Naujas Užsakymas</a>
+
 <h1>Mano užsakymai:</h1>
 {% for order in orders %}
 <a class="{% if order.is_overdue %}text-danger{% endif %}" href="{% url 'order' order.pk %}"><p>{{ order }}</p></a>

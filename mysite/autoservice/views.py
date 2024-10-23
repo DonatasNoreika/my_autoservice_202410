@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, reverse
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.core.paginator import Paginator
 from django.views.generic.edit import FormMixin
 from .models import Service, Order, Car
@@ -152,4 +152,15 @@ def profile(request):
         'p_form': p_form,
     }
     return render(request, "profile.html", context=context)
+
+
+class OrderCreateView(LoginRequiredMixin, CreateView):
+    model = Order
+    template_name = "order_form.html"
+    success_url = "/userorders/"
+    fields = ['car', 'deadline']
+
+    def form_valid(self, form):
+        form.instance.client = self.request.user
+        return super().form_valid(form)
 
