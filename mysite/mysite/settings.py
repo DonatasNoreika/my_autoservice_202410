@@ -32,10 +32,11 @@ EMAIL_HOST_USER = 'mano_pastas@gmail.com'
 # el. pašto adresas iš kurio siųsite
 EMAIL_HOST_PASSWORD = 'VerySecret'
 
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.1.194"]
 
 # Application definition
 
