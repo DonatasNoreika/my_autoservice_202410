@@ -173,3 +173,6 @@ TINYMCE_DEFAULT_CONFIG = {
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
+
+STATICFILES_DIRS = ['/var/www/mysite/autoservice/media']
+STATIC_ROOT = "/var/www/mysite/autoservice/static"
